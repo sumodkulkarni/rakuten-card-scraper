@@ -1,0 +1,19 @@
+{
+  "name": "rakuten-card-scraper",
+  "version": "1.0.0",
+  "description": "Scrapes Rakuten Card e-Navi to get transaction data and perform analytics on it",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sumod Kulkarni",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.15.3",
+    "handlebars": "^4.0.10",
+    "nightmare": "^2.10.0",
+    "path": "^0.12.7",
+    "request": "^2.81.0"
+  }
+}
