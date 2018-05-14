@@ -17,13 +17,19 @@ var beginNightmare = function(url){
 	.click('#indexForm > fieldset > button')
 	.wait(5000)
 	.screenshot('./files/after-login.png')
-	.goto('https://www.rakuten-card.co.jp/e-navi/members/statement/index.xhtml?tabNo=0')
+	.goto('https://www.rakuten-card.co.jp/e-navi/members/statement/index.xhtml?tabNo=7')
 	.wait(2000)
-	.screenshot('./files/usage-details.png')
- 	.end()
-	.then(function(){
-  	console.log("done");
+	.evaluate(function() {
+		return document.documentElement.innerHTML;
 	})
+	.then(function(html) {
+		var $ = cheerio.load(html);
+		var expensesTable = $('span[id="tableStyle01 textStyle01 thStyle01"]').html()
+		fs.appendFile('expensesTable.html', expensesTable, function(err) {
+			if (err) console.log('error = ', err);
+			else console.log('Saved file')
+		})
+	});
 }	
 
 module.exports = {
