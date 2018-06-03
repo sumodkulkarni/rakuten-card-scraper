@@ -8,6 +8,8 @@ var nightmare = Nightmare();
 var email = login.getEmail();
 var password = login.getPassword();
 
+var expenses = []
+
 var beginNightmare = function(url){
 	nightmare
 	.useragent("Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36")
@@ -24,11 +26,15 @@ var beginNightmare = function(url){
 	})
 	.then(function(html) {
 		var $ = cheerio.load(html);
-		var expensesTable = $('span[id="tableStyle01 textStyle01 thStyle01"]').html()
-		fs.appendFile('expensesTable.html', expensesTable, function(err) {
-			if (err) console.log('error = ', err);
-			else console.log('Saved file')
+		var expensesDivOuter = $('#contentsArea_statement > div.rce-l-wrap-inr.stmt > div.stmt-c-card.stmt-details > div:nth-child(2) > div.stmt-current-payment-list.stmt-payment-lists.is-current.js-payment-sort > div.stmt-current-payment-list-body.stmt-payment-lists__body')
+
+		expensesDivOuter.find('div.stmt-payment-lists__i.js-payment-accordion-ctrl.is-close.js-payment-sort-item')
+		.each( function() {
+			var expense = $(this).attr('data-sort');
+			console.log('Expense = ', expense)
+			expenses.push(expense)
 		})
+		console.log('done')
 	});
 }	
 
