@@ -12,6 +12,7 @@
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.15.3",
     "handlebars": "^4.0.10",
+    "jsonexport": "^2.1.0",
     "nightmare": "^2.10.0",
     "path": "^0.12.7",
     "request": "^2.81.0"
