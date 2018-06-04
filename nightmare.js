@@ -8,17 +8,11 @@ var nightmare = Nightmare();
 var email = login.getEmail();
 var password = login.getPassword();
 
-var index = 7;
+var index = 0;
 var expenses = []
 
 var beginNightmare = function(url){
-	nightmare
-	.useragent("Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36")
-	.goto(url)
-	.type('#u', email)
-	.type('#p', password)
-	.click('#indexForm > fieldset > button')
-	.wait(2000)
+	setupNightmare(url)
 	.goto('https://www.rakuten-card.co.jp/e-navi/members/statement/index.xhtml?tabNo=' + index)
 	.wait(2000)
 	.evaluate(function() {
@@ -36,6 +30,16 @@ var beginNightmare = function(url){
 		saveExpensesAsCSV(expenses)
 	});
 }	
+
+var setupNightmare = function(url) {
+	return nightmare
+		.useragent("Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36")
+		.goto(url)
+		.type('#u', email)
+		.type('#p', password)
+		.click('#indexForm > fieldset > button')
+		.wait(2000)
+}
 
 var saveExpensesAsCSV = function(expenses) {
 	var csv = "";
@@ -64,8 +68,7 @@ var saveExpensesAsCSV = function(expenses) {
 var parseDate = function(date, separator) {
 	if (!separator) {separator = "-"}
 	var output = [date.slice(0, 4), separator, date.slice(4, 6), separator, date.slice(6)].join('');
-	console.log('output = ', output);
-	return new Date(output);
+	return output;
 }
 
 module.exports = {
